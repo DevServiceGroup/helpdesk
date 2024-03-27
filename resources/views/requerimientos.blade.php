@@ -52,7 +52,8 @@
             <option value="Medio">Media</option>
             <option value="Bajo">Baja</option>
         </select>
-        <label class="m-3">Hay {{$requerimientos}} requerimientos completados y {{$requerimientossin}} sin completar</label class="m-3">
+        <label class="m-3">Hay {{ $requerimientos }} requerimientos completados y {{ $requerimientossin }} sin
+            completar</label class="m-3">
         <div id="cards-container" class="row pb-4"></div>
     </div>
     </div>
@@ -89,7 +90,9 @@
 
             if (requerimientos && requerimientos.length > 0) {
                 requerimientos.forEach(function(requerimiento) {
-                    var card = $('<div class="card mt-4 mx-3" style="width: 18rem; max-height: 13rem; overflow-y: auto;">');
+                    var card = $(
+                        '<div class="card mt-4 mx-3" style="width: 18rem; max-height: 13rem; overflow-y: auto;">'
+                        );
                     var cardBody = $('<div class="card-body">');
                     var titulo = $('<h5 class="card-title">').text(requerimiento.importancia);
                     var email = $('<h6 class="card-subtitle mb-2 text-body-secondary""></h6>').text(
@@ -97,8 +100,14 @@
                     var descripcion = $('<p class="card-text">').text(requerimiento.requerimiento);
                     var cardFooter = $(
                         '<div class="card-footer" style="background: rgba(128, 128, 128, 0)">');
-                    var enlace = $('<a>').addClass('btn btn-success').attr('href',
-                        '/requerimientos/' + requerimiento.id).text('Completar');
+                    if (requerimiento.estado == 'En proceso') {
+                        var enlace = $('<a>').addClass('btn btn-success').attr('href',
+                            '/requerimientos/' + requerimiento.id).text('Completar');
+                    } else {
+                        var enlace = $('<a>').addClass('btn btn-primary').attr('href',
+                            '/login/' + requerimiento.id).text('En proceso');
+                    }
+
 
                     cardBody.append(titulo);
                     cardBody.append(email);

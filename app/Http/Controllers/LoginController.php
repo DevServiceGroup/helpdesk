@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Requerimientos;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,5 +26,12 @@ class LoginController extends Controller
             // Autenticación fallida
             return back()->with('error', 'nouser');
         }
+    }
+    public function show($id)
+    {
+        $requerimiento = Requerimientos::where('id', $id)->first();
+        $requerimiento->estado = 'En proceso';
+        $requerimiento->save();
+        return back()->with('ok', 'ok');
     }
 }

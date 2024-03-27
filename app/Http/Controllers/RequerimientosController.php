@@ -12,8 +12,8 @@ class RequerimientosController extends Controller
      */
     public function index()
     {
-        $requerimientosCompletados = Requerimientos::where('importancia', 'Completado')->count();
-        $requerimientossin = Requerimientos::where('importancia', '!=', 'Completado')->count();
+        $requerimientosCompletados = Requerimientos::where('estado', 'Completado')->count();
+        $requerimientossin = Requerimientos::where('estado', '!=', 'Completado')->count();
         return view('requerimientos')->with('requerimientos', $requerimientosCompletados)->with('requerimientossin', $requerimientossin);
     }
 
@@ -40,6 +40,7 @@ class RequerimientosController extends Controller
             $requerimiento->requerimiento = $requerimientoform;
             $requerimiento->importancia = $importancia;
             $requerimiento->empresa = $empresa;
+            $requerimiento->estado = 'En espera';
             if ($requerimiento->save()) {
                 return back()->with('ok', 'ok');
             } else {
@@ -56,7 +57,7 @@ class RequerimientosController extends Controller
     public function show($id)
     {
         $requerimiento = Requerimientos::where('id', $id)->first();
-        $requerimiento->importancia = 'Completado';
+        $requerimiento->estado = 'Completado';
         $requerimiento->save();
         return back()->with('ok', 'ok');
     }

@@ -26,7 +26,7 @@
             border-right: 0px;
         }
 
-        #input-email {
+        .input-email {
             border-top: 0;
             border-left: 0;
             border-right: 0;
@@ -35,7 +35,7 @@
             padding: 1%;
         }
 
-        #input-email:focus {
+        .input-email:focus {
             border-color: red;
             box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
             /* Añadir sombra para resaltar */
@@ -44,11 +44,12 @@
         #enviar {
             background: rgb(255, 0, 0);
         }
+
         #derecha {
-            position: fixed;
+            position: absolute;
             float: right;
-            top: 20px;
-            right: 20px;
+            top: 4%;
+            right: 2%;
             z-index: 999;
             text-decoration-line: none;
             color: rgb(71, 25, 131)
@@ -58,22 +59,67 @@
 
 <body>
     @if (Auth::check())
-        <a id="derecha" class="mx-4" href="{{route('requerimientos.index')}}" style="color: rgb(51, 0, 255)"><h6>Ver requerimientos</h6></a>
+        <a id="derecha" class="mx-4" href="{{ route('requerimientos.index') }}" style="color: rgb(51, 0, 255)">
+            <h6>Ver requerimientos</h6>
+        </a>
     @else
         <a id="derecha" class="mx-4" data-toggle="modal" data-target="#exampleModal">Login</a>
     @endif
     <div class="container mt-4">
         <div class="card text border-danger mb-3 mb-3 m-auto border-custom" style="max-width: 60%;">
             <div class="card-header" style="background-color: white;">
-                <h3>Helpdesk Área de SITI</h3>
-                <p>Sistema de soporte técnico especializado en resolver problemas y brindar asistencia relacionada con
+                <div class="row">
+                    <div class="col">
+                        <h3 class="">Helpdesk Área de SITI</h3>
+                    </div>
+                    <div class="col">
+                        <!-- Botón que activa el modal -->
+                        <button class="btn btn-danger mb-2" data-toggle="modal" data-target="#Modaldeejemplo">Ver mis
+                            requerimientos</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="Modaldeejemplo" tabindex="-1" role="dialog"
+                            aria-labelledby="ModaldeejemploLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="ModaldeejemploLabel">Requerimientos Personales</h5>
+                                        <button type="button" class="btn-close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <form action="{{route('ajax.personales')}}" method="post">
+                                        @csrf
+                                        <div class="modal-body">
+
+                                            <div class="form-group">
+                                                <label for="">Digita tu correo</label>
+                                                <input type="email" class="form-control" name="email"
+                                                    aria-describedby="emailHelpId" >
+                                                <small id="emailHelpId"
+                                                    class="form-text text-muted">pepitoperez@servicegroup.com.co</small>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cerrar</button>
+                                            <button class="btn btn-success" type="submit">Ingresar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>Sistema de soporte técnico especializado en resolver problemas y brindar asistencia relacionada
+                    con
                     el uso de sistemas informáticos, software, redes y tecnologías de la información dentro de una
                     organización.</p>
             </div>
-            <h6 class="card-header p-4" style="color: red; background-color: white; font-size: medium;">* Indica que la
+            <h6 class="card-header p-4" style="color: red; background-color: white; font-size: medium;">* Indica que
+                la
                 pregunta es obligatoria</h6>
-            <!-- <h5 class="card-title">Primary card title</h5> -->
-
         </div>
     </div>
     <form action="{{ route('requerimientos.store') }}" method="post">
@@ -81,15 +127,15 @@
         <div class="container mt-4">
             <div class="card text mb-3 mb-3 m-auto" style="max-width: 60%;">
                 <div class="mx-4 mt-4" style="background-color: white;">Ingrese su correo electronico</div>
-                <input type="email" class="form-control m-3 mb-4" name="email" placeholder="Tu respuesta"
-                    id="input-email" style="max-width: 30%;">
+                <input type="email" class="form-control m-3 mb-4 input-email" name="email"
+                    placeholder="Tu respuesta" style="max-width: 30%;">
             </div>
         </div>
         <div class="container mt-4">
             <div class="card text mb-3 mb-3 m-auto" style="max-width: 60%;">
                 <div class="mx-4 mt-4" style="background-color: white;">Digita el requerimiento</div>
-                <input type="text" class="form-control m-3 mb-4" name="requerimiento" placeholder="Tu respuesta"
-                    id="input-email" style="max-width: 90%;">
+                <input type="text" class="form-control m-3 mb-4 input-email" name="requerimiento"
+                    placeholder="Tu respuesta" style="max-width: 90%;">
 
             </div>
         </div>
@@ -124,8 +170,8 @@
         <div class="container mt-4">
             <div class="card text mb-3 mb-3 m-auto" style="max-width: 60%;">
                 <div class="mx-4 mt-4" style="background-color: white;">Ingresa cual es tu empresa</div>
-                <input type="text" class="form-control m-3 mb-4" name="empresa" placeholder="Tu respuesta"
-                    id="input-email" style="max-width: 90%;">
+                <input type="text" class="form-control m-3 mb-4 input-email" name="empresa"
+                    placeholder="Tu respuesta" style="max-width: 90%;">
 
             </div>
         </div>
@@ -148,13 +194,12 @@
                     <div class="modal-body">
                         <div class="form-group m-1">
                             <label for="">Email</label>
-                            <input type="email" required class="form-control" name="email" id=""
+                            <input type="email" required class="form-control" name="email"
                                 aria-describedby="emailHelpId" placeholder="">
                         </div>
                         <div class="form-group m-1">
                             <label for="">Password</label>
-                            <input type="password" required class="form-control" name="password" id=""
-                                placeholder="">
+                            <input type="password" required class="form-control" name="password" placeholder="">
                         </div>
 
                     </div>

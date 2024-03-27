@@ -13,6 +13,7 @@ class Requerimientos extends Model
         'email',
         'requerimiento',
         'importancia',
-        'empresa'
+        'empresa',
+        'estado '
     ];
 }
